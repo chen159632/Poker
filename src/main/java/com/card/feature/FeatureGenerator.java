@@ -2,6 +2,7 @@ package com.card.feature;
 
 import com.card.data.Card;
 import com.card.data.Color;
+import com.card.data.SortCardData;
 import com.card.patten.BasePatten;
 import com.card.patten.FeaturePattern;
 import com.card.patten.PatternBuilder;
@@ -140,12 +141,61 @@ public class FeatureGenerator {
         }
     }
 
+
+    public static  Map<String, Double> generageSortFeatures(List<Card> playCards, List<Card> openCards) {
+        Map<String, Double> features = new HashMap<>();
+
+        List<SortCardData> sortCardDataList = new ArrayList<>();
+        for (Card card : playCards) {
+            SortCardData sortCardData = new SortCardData();
+            sortCardData.setNumber(convertCardToNumber(card));
+            sortCardData.setOpenCard(false);
+            sortCardDataList.add(sortCardData);
+        }
+
+        for (Card openCard : openCards) {
+            SortCardData sortCardData = new SortCardData();
+            sortCardData.setOpenCard(true);
+            sortCardData.setNumber( convertCardToNumber(openCard));
+            sortCardDataList.add(sortCardData);
+        }
+
+        Collections.sort(sortCardDataList, new Comparator<SortCardData>() {
+            @Override
+            public int compare(SortCardData sortCardData, SortCardData t1) {
+                return sortCardData.getNumber().compareTo(t1.getNumber());
+            }
+        });
+
+        int maxIndex = -1;
+        int minIndex = -1;
+        for (int i = 0; i < sortCardDataList.size(); i++) {
+            if (minIndex == -1 && sortCardDataList.get(i).isOpenCard() == false) {
+                minIndex = i + 1;
+            }
+        }
+
+        for (int i = sortCardDataList.size() - 1; i >= 0; i--) {
+            if (maxIndex == -1 && sortCardDataList.get(i).isOpenCard() == false) {
+                maxIndex = i + 1;
+            }
+        }
+
+        features.put("max_index", (double) maxIndex);
+        features.put("min_index", (double) minIndex);
+        features.put("avg_index", (maxIndex + minIndex) / 2.0);
+
+        return features;
+    }
+
     public static Map<String, Double> generateFeatures(List<Card> playCards, List<Card> openCards) {
         Map<String, Double> features = new HashMap<>();
 
         calculateBaseFeature(playCards, features);
         calculateFeatureForOneCardWithOpenCards(playCards, openCards, features);
         calculateFeatureForTwoCardWithOpenCards(playCards, openCards, features);
+
+        features.putAll(generageSortFeatures(playCards, openCards));
 
 
         List<Card> allCards = new ArrayList<>();

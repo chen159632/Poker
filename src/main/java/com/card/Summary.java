@@ -28,7 +28,7 @@ public class Summary {
     public static void main(String[] args) throws  Exception {
         BufferedReader reader = new BufferedReader(new FileReader(new File("/Users/chenhong/card_play_result.txt")));
 
-        BufferedWriter writer = new BufferedWriter(new FileWriter(new File("/Users/chenhong/card_play_feature_3.csv")));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(new File("/Users/chenhong/card_play_feature_add_sort_feature.csv")));
 
 
         boolean isFirst = true;
@@ -108,7 +108,7 @@ public class Summary {
 
                 count++;
                 if (count > 1000000) {
-                    break;
+                    //break;
                 }
             }
             CompareResult result = map.getOrDefault(level, new CompareResult());

@@ -9,11 +9,11 @@ na_values = ['', 'NULL', 'null', 'NA', 'na', 'NaN', 'nan', '\\N']
 
 
 ## load data
-feature_import='xgb_model/feature_importance_.txt'
-train_pre_file='xgb_model/train_pred.txt'
-valid_pre_file='xgb_model/valid_pred.txt'
-model = 'xgb_model/card.model'
-feature_file='/Users/chenhong/card_play_feature_2.csv'
+feature_import='xgb_model/feature_importance_with_sort_feature_.txt'
+train_pre_file='xgb_model/train_pred_with_sort_feature.txt'
+valid_pre_file='xgb_model/valid_pred_with_sort_feature.txt'
+model = 'xgb_model/card_with_sort_feature.model'
+feature_file='/Users/chenhong/card_play_feature_add_sort_feature.csv'
 feat_map_file = '/Users/chenhong/card_feat_map.txt'
 
 xy_df = pd.read_table(feature_file, sep=',', na_values=na_values)

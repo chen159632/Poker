@@ -64,7 +64,7 @@ def get_lift(data_file, n_groups, output_file, y_name='y', score_name='score'):
     print(out_df)
 
 if __name__ == '__main__':
-    data_file = "/Users/chenhong/xgb_model/valid_pred.txt"
+    data_file = "/Users/chenhong/xgb_model/valid_pred_with_sort_feature.txt"
     y_name = "label"
     score_name = "score"
     print(data_file)

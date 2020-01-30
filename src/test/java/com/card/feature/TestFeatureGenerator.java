@@ -163,4 +163,51 @@ public class TestFeatureGenerator {
     }
 
 
+    @Test
+    public void testSortFeatures_max() {
+
+        List<Card> playCard = new ArrayList<Card>();
+        playCard.add(TestUtil.createCardNormalNumber(Color.CLUB, 10));
+        playCard.add(TestUtil.createCardNormalNumber(Color.DIAMOND, 9));
+
+        List<Card> openCards = new ArrayList<Card>();
+        openCards.add(TestUtil.createCardNormalNumber(Color.SPADE, 4));
+        openCards.add(TestUtil.createCardNormalNumber(Color.HEART, 5));
+        openCards.add(TestUtil.createCardNormalNumber(Color.CLUB, 3));
+
+        Map<String, Double> features = FeatureGenerator.generageSortFeatures(playCard, openCards);
+
+        for (Map.Entry<String, Double> entry : features.entrySet()) {
+            System.out.println(entry.getKey() + " -> " + entry.getValue());
+        }
+
+        assert 5.0 == features.get("max_index");
+        assert 4.0 == features.get("min_index");
+
+    }
+
+    @Test
+    public void testSortFeatures_min() {
+
+        List<Card> playCard = new ArrayList<Card>();
+        playCard.add(TestUtil.createCardNormalNumber(Color.CLUB, 2));
+        playCard.add(TestUtil.createCardNormalNumber(Color.DIAMOND, 3));
+
+        List<Card> openCards = new ArrayList<Card>();
+        openCards.add(TestUtil.createCardNormalNumber(Color.SPADE, 8));
+        openCards.add(TestUtil.createCardNormalNumber(Color.HEART, 5));
+        openCards.add(TestUtil.createCardNormalNumber(Color.CLUB, 5));
+
+        Map<String, Double> features = FeatureGenerator.generageSortFeatures(playCard, openCards);
+
+        for (Map.Entry<String, Double> entry : features.entrySet()) {
+            System.out.println(entry.getKey() + " -> " + entry.getValue());
+        }
+
+        assert 2.0 == features.get("max_index");
+        assert 1.0 == features.get("min_index");
+
+    }
+
+
 }
